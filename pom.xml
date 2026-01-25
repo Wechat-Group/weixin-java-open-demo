@@ -17,7 +17,7 @@
     <description>Spring Boot Demo with wechat Open</description>
 
     <properties>
-        <weixin-java-open.version>4.7.0</weixin-java-open.version>
+        <weixin-java-open.version>4.8.0</weixin-java-open.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
