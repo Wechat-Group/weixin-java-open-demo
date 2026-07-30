@@ -27,7 +27,7 @@ public class WechatNotifyController {
                                 @RequestParam("nonce") String nonce, @RequestParam("signature") String signature,
                                 @RequestParam(name = "encrypt_type", required = false) String encType,
                                 @RequestParam(name = "msg_signature", required = false) String msgSignature) {
-        log.info(
+        logger.info(
                 "\n接收微信请求：[signature=[{}], encType=[{}], msgSignature=[{}],"
                         + " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
                 signature, encType, msgSignature, timestamp, nonce, requestBody);
@@ -40,12 +40,12 @@ public class WechatNotifyController {
         // aes加密的消息
         WxOpenXmlMessage inMessage = WxOpenXmlMessage.fromEncryptedXml(requestBody,
                 wxOpenService.getWxOpenConfigStorage(), timestamp, nonce, msgSignature);
-        log.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
+        logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
         try {
             String out = wxOpenService.getWxOpenComponentService().route(inMessage);
-            log.debug("\n组装回复信息：{}", out);
+            logger.debug("\n组装回复信息：{}", out);
         } catch (WxErrorException e) {
-            log.error("receive_ticket", e);
+            logger.error("receive_ticket", e);
         }
 
 
@@ -61,7 +61,7 @@ public class WechatNotifyController {
                            @RequestParam("openid") String openid,
                            @RequestParam("encrypt_type") String encType,
                            @RequestParam("msg_signature") String msgSignature) {
-        log.info(
+        logger.info(
                 "\n接收微信请求：[appId=[{}], openid=[{}], signature=[{}], encType=[{}], msgSignature=[{}],"
                         + " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
                 appId, openid, signature, encType, msgSignature, timestamp, nonce, requestBody);
@@ -74,7 +74,7 @@ public class WechatNotifyController {
         // aes加密的消息
         WxMpXmlMessage inMessage = WxOpenXmlMessage.fromEncryptedMpXml(requestBody,
                 wxOpenService.getWxOpenConfigStorage(), timestamp, nonce, msgSignature);
-        log.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
+        logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
         // 全网发布测试用例
         if (StringUtils.equalsAnyIgnoreCase(appId, "wxd101a85aa106f53e", "wx570bc396a51b8ff8")) {
             try {
